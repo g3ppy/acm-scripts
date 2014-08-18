@@ -1,4 +1,4 @@
 acm-scripts
 ===========
 
-Acm scripts
+Scripts for generating ACM templates
