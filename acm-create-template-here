@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+PROJECT_WORKING_DIR=$(pwd)
+PROJECT_BUILD_DIR="$PROJECT_WORKING_DIR/build"
+PROJECT_NAME=$(basename $(pwd))
+PROJECT_CPP_FILE="$PROJECT_NAME.cpp"
+PROJECT_IN_FILE="$PROJECT_NAME.in"
+PROJECT_OUT_FILE="$PROJECT_NAME.out"
+
+echo "Project Name: $PROJECT_NAME"
+echo "Project CPP File: $PROJECT_CPP_FILE"
+echo "Project IN File: $PROJECT_IN_FILE"
+echo "Project OUT File: $PROJECT_OUT_FILE"
+echo "Project Working Dir: $PROJECT_WORKING_DIR"
+echo "Project Build Dir: $PROJECT_BUILD_DIR"
+
+
+touch $PROJECT_CPP_FILE
+touch $PROJECT_IN_FILE
+touch $PROJECT_OUT_FILE
+cp ~/bin/acm/template.cpp $PROJECT_CPP_FILE
+cp ~/bin/acm/template.in $PROJECT_IN_FILE
+cp ~/bin/acm/template.out $PROJECT_OUT_FILE
+
+mkdir -p $PROJECT_BUILD_DIR
+
+sed "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" ~/bin/acm/CMakeLists.txt > CMakeLists.txt
+sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" -e "s|{{PROJECT_BUILD_DIR}}|$PROJECT_BUILD_DIR|g"\
+    -e "s|{{PROJECT_WORKING_DIR}}|$PROJECT_WORKING_DIR|g" -e "s/{{PROJECT_ARGS}}/\&lt; $PROJECT_IN_FILE/g" ~/bin/acm/CMakeLists.txt.user > CMakeLists.txt.user
